@@ -3,6 +3,7 @@ package com.example.a15017470.p06;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,13 +25,12 @@ import android.widget.TextView;
 public class FragmentSecond extends Fragment {
 
     EditText et2;
-    Button btn2;
+    Button btn2, email2;
     TextView tv2;
 
     public FragmentSecond() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +40,21 @@ public class FragmentSecond extends Fragment {
 
         et2 = (EditText)view.findViewById(R.id.et2);
         btn2 = (Button)view.findViewById(R.id.btn2);
+        email2 = (Button)view.findViewById(R.id.email2);
         tv2 = (TextView)view.findViewById(R.id.tv2);
+
+        email2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/html");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"jason_lim@rp.edu.sg"});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "SMS Content");
+                intent.putExtra(Intent.EXTRA_TEXT, tv2.getText().toString());
+
+                startActivity(Intent.createChooser(intent, "Send Email"));
+            }
+        });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
